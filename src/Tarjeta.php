@@ -9,36 +9,10 @@ class Tarjeta implements TarjetaInterface {
   //Que la variable plus comience desde 0 se refiere a que todavia no se ha usado ningun viaje plus
   protected $plus = 0;
 
-  public $precio = 14.80;
+  public $ultimoBoleto;
 
-  public $tiempo;
-
-  public $anteriorTiempo = null;
-
-  public $anteriorColectivo = null;
-
-  public $actualColectivo;
-
-  public function __construct($tiempo, $saldo = 0) {
-    $this->tiempo = $tiempo;
+  public function __construct($saldo = 0) {
     $this->saldo = $saldo;
-  }
-
-  public function obtenerSaldo() {
-    return $this->saldo;
-  }
-
-
-  public function bajarSaldo($montito) {
-    $this->saldo -= $montito;
-  }
-
-  public function obtenerPlus() {
-    return $this->plus;
-  }
-
-  public function aumentarPlus() {
-    $this->plus ++;
   }
 
   public function puedePagar($linea, $empresa, $numero) {

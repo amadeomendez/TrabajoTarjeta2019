@@ -5,36 +5,6 @@ namespace TrabajoTarjeta;
 interface TarjetaInterface {
 
     /**
-     * Devuelve el saldo que le queda a la tarjeta.
-     *
-     * @return float
-     */
-    public function obtenerSaldo();
-
-    /**
-     * Devuelve el saldo que le queda a la tarjeta menos el monto pasado.
-     *
-     * @param float $montito
-     *
-     * @return float
-     */
-    public function bajarSaldo($montito);
-
-    /**
-     * Devuelve la cantidad de viajes plus que uso la tarjeta.
-     *
-     * @return int
-     */
-    public function obtenerPlus();
-
-    /**
-     * Aumenta la cantidad de viajes plus en 1.
-     *
-     * @return int
-     */
-    public function aumentarPlus();
-
-    /**
      * Retorna "normal" si puede pagar normalmente,
      * "plus" si paga con un viaje plus,
      * "paga un plus" si paga con saldo y ademas abona un plus,
