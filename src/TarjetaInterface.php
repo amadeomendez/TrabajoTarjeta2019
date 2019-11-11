@@ -4,46 +4,19 @@ namespace TrabajoTarjeta;
 
 interface TarjetaInterface {
 
-    /**
-     * Retorna "normal" si puede pagar normalmente,
-     * "plus" si paga con un viaje plus,
-     * "paga un plus" si paga con saldo y ademas abona un plus,
-     * "paga dos plus" si abona dos,
-     * "transbordo normal" si usa transbordo,
-     * "transbordo y paga un plus" si usa transbordo y tambien paga un plus,
-     * "transbordo y paga dos plus" si paga dos,
-     * o "no" en caso contrario.
-     * Luego, si puede pagar, baja el saldo o los viajes plus de la tarjeta dependiendo del caso.
-     *
-     * @param string string int
-     *
-     * @return string
-     */
-    public function puedePagar($linea, $empresa, $numero);
+  public function obtenerSaldo();
 
-    /**
-     * Checkea si se cumplen las opciones necesarias para el vieje plus y devuelve true o false segun el caso.
-     *
-     * @param ColectivoInterface
-     *
-     * @return bool
-     */
-    public function trasbordoPermitido($colectivo);
+  public function obtenerPlus();
 
-    /**
-     * Se fija el tiempo necesario para hacer un transbordo segun el dia o si es feriado o no.
-     *
-     * @param TiempoInterface
-     *
-     * @return int
-     */
-    function diferenciaNecesaria($tiempo);
+  public function obtenerUltimoBoleto();
 
+  public function guardarUltimoBoleto(BoletoInterface $boleto);
 
-    /**
-     * Se fija si es feriado y retorna true o false segun el caso.
-     *
-     * @return bool
-     */
-    function esFeriado();
+  public function sumarSaldo($monto);
+
+  public function sumarPlus();
+
+  public function restarSaldo($monto);
+
+  public function restarPlus($monto);
 }

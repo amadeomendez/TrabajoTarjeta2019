@@ -4,142 +4,49 @@ namespace TrabajoTarjeta;
 
 class Tarjeta implements TarjetaInterface {
 
-  public $saldo;
-
-  //Que la variable plus comience desde 0 se refiere a que todavia no se ha usado ningun viaje plus
+  protected $saldo;
   protected $plus = 0;
+  protected $ultimoBoleto;
 
-  public $ultimoBoleto;
+  protected $metodo;
 
-  public function __construct($saldo = 0) {
+  public function __construct($saldo = 0, MetodoInterface $metodo = null) {
     $this->saldo = $saldo;
-  }
-
-  public function puedePagar($linea, $empresa, $numero) {
-    $this->actualColectivo = array($linea, $empresa, $numero);
-    if ($this->obtenerSaldo() >= $this->precio) {
-      switch ($this->obtenerPlus()) {
-        case 0:
-          if ($this->trasbordoPermitido($this->actualColectivo)) {
-            $this->bajarSaldo($this->precio / 3);
-            return "transbordo normal";
-          }
-          else {
-            $this->bajarSaldo($this->precio);
-            return "normal";
-          }
-          break;
-        case 1:
-          if ($this->trasbordoPermitido($this->actualColectivo)) {
-            if ($this->obtenerSaldo() >= $this->precio * 4/3) {
-              $this->bajarSaldo($this->precio / 3);
-              $this->bajarSaldo($this->precio);
-              $this->plus--;
-              return "transbordo y paga un plus";
-            } else {
-              $this->bajarSaldo($this->precio / 3);
-              return "transbordo normal";
-            }
-          }
-          if ($this->obtenerSaldo() >= $this->precio * 2) {
-            $this->bajarSaldo($this->precio);
-            $this->bajarSaldo($this->precio);
-            $this->plus--;
-            return "paga un plus";
-          } else {
-            $this->bajarSaldo($this->precio);
-            return "normal";
-          }
-          break;
-        case 2:
-          if ($this->trasbordoPermitido($this->actualColectivo)) {
-            if ($this->obtenerSaldo() >= $this->precio * 7/3) {
-              $this->bajarSaldo($this->precio);
-              $this->bajarSaldo($this->precio);
-              $this->bajarSaldo($this->precio / 3);
-              $this->plus-=2;
-              return "transbordo y paga dos plus";
-            } else if ($this->obtenerSaldo() >= $this->precio * 4/3) {
-              $this->bajarSaldo($this->precio);
-              $this->bajarSaldo($this->precio / 3);
-              $this->plus--;
-              return "transbordo y paga un plus";
-            } else {
-              $this->bajarSaldo($this->precio / 3);
-              return "transbordo normal";
-            }
-          }
-          if ($this->obtenerSaldo() >= $this->precio * 3) {
-            $this->bajarSaldo($this->precio);
-            $this->bajarSaldo($this->precio);
-            $this->bajarSaldo($this->precio);
-            $this->plus-=2;
-            return "paga dos plus";
-          } else if ($this->obtenerSaldo() >= $this->precio * 2) {
-            $this->bajarSaldo($this->precio);
-            $this->bajarSaldo($this->precio);
-            $this->plus--;
-            return "paga un plus";
-          } else {
-            $this->bajarSaldo($this->precio);
-            return "normal";
-          }
-      }
-    }
-    else {
-      if ($this->trasbordoPermitido($this->actualColectivo)) {
-        if ($this->obtenerSaldo()>=(($this->precio)/3)) {
-          return "transbordo normal";
-        }
-      }
-      if ($this->obtenerPlus() != 2) {
-        $this->aumentarPlus();
-          return "usa plus";
-      }
-    }
-    return "no";
-  }
-
-  public function trasbordoPermitido($colectivo) {
-    $actual = $this->tiempo->time();
-    $diferencia = (($actual) - ($this->anteriorTiempo));
-    // La diferencia que devuelve está en minutos, por eso multiplico por 60
-    if ($diferencia < ($this->diferenciaNecesaria($actual) * 60) && (($this->anteriorTiempo) !== null) && $colectivo !== $this->anteriorColectivo && $this->anteriorColectivo !== null) {
-      $this->anteriorTiempo = $actual;
-      $this->anteriorColectivo = $colectivo;
-      return true;
-    }
-    $this->anteriorTiempo = $actual;
-    $this->anteriorColectivo = $colectivo;
-    return false;
-  }
-
-  public function diferenciaNecesaria($tiempo) {
-    $dia = date("D",$tiempo);
-    $hora = date("H", $tiempo);
-    if ($hora>=22 || $hora<=6) { // Si es de noche hay mas tiempo
-      return 90;
-    } else {
-      if ($dia == "Sat") { // Si es sabado depende si es de mañana o tarde
-        if ($hora<14 && !($this->esFeriado())) { // Aunque tambien puede ser feriado un sabado y entonces hay mas tiempo a la mañana tambien
-          return 60;
-        } else {
-          return 90;
-        }
-      }
-      if ($dia == "Sun") { // Los domingos tambien hay mas tiempo
-        return 90;
-      }
-      //if($this->esFeriado()) // Y los otros días depende si es feriado
-      //  return 90;
-      //else
-      //  return 60;
-      return 60; // Por ahora no manejamos los feriados
+    $this->metodo = $metodo;
+    if($metodo == null){
+      $this->metodo = new MetodoNormal;
     }
   }
 
-  public function esFeriado() {
-    return false;
+  public function obtenerSaldo(){
+    return $this->saldo;
   }
 
+  public function obtenerPlus(){
+    return $this->plus;
+  }
+
+  public function obtenerUltimoBoleto(){
+    return $this->ultimoBoleto;
+  }
+
+  public function guardarUltimoBoleto(BoletoInterface $boleto) {
+    $this->ultimoBoleto = $boleto;
+  }
+
+  public function sumarSaldo($monto){
+    $this->saldo += $monto;
+  }
+
+  public function sumarPlus(){
+    $this->plus += 1;
+  }
+
+  public function restarSaldo($monto){
+    $this->saldo -= $monto;
+  }
+
+  public function restarPlus($monto){
+    $this->plus -= $monto;
+  }
 }
