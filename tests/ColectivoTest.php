@@ -14,7 +14,7 @@ class ColectivoTest extends TestCase {
     $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
     $tarjeta = new Tarjeta(100.0, $metodo);
     $maquina->escanearTarjeta($tarjeta);
-    $this->assertEquals($tarjeta->obtenerUltimoBoleto(), new Boleto($precio, $colectivo, $tarjeta, $tiempo,));
+    $this->assertEquals($tarjeta->obtenerUltimoBoleto(), new Boleto($precio, $colectivo, $tarjeta, $tiempo));
     $this->assertEquals($tarjeta->obtenerPlus(), 0);
   }
 
