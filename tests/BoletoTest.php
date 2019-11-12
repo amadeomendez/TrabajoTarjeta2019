@@ -6,27 +6,20 @@ use PHPUnit\Framework\TestCase;
 
 class BoletoTest extends TestCase {
 
-    public function testMensajesBoletos() {
+    public function testBoleto() {
+        $precio = 32.50
         $tiempo = new TiempoFalso(0);
-        $colectivo = new Colectivo("K", "Empresa genérica", 3, $tiempo);
-        $tarjeta = new Tarjeta($tiempo);
-        $valor = $tarjeta->precio;
-        $tarjeta->recargar(100);
-        $boleto = $colectivo->pagarCon($tarjeta);
-        $this->assertEquals($boleto->obtenerColectivo(), $colectivo);
-        $this->assertEquals($boleto->obtenerTarjeta(), $tarjeta);
-        $this->assertEquals($boleto->obtenerValor(), $valor);
-        $this->assertEquals($boleto->obtenerTipoTarjeta(), get_class($tarjeta));
-        $this->assertEquals($boleto->obtenerFecha(), $tiempo->time());
-        $this->assertEquals($boleto->obtenerDescripcion(), "");
-        $tarjeta->aumentarPlus();
-        $tiempo->avanzar(6000); // Avanzamos para que no te cobre un transbordo
-        $boleto = $colectivo->pagarCon($tarjeta);
-        $this->assertEquals($boleto->obtenerDescripcion(),"Abona viaje plus ".$tarjeta->precio." y");
-        $tarjeta->recargar(962.59);
-        $tarjeta->aumentarPlus();
-        $tarjeta->aumentarPlus();
-        $boleto = $colectivo->pagarCon($tarjeta);
-        $this->assertEquals($boleto->obtenerDescripcion(), "Abona viajes plus ".(($tarjeta->precio)*2)." y");
+        $metodo = new MetodoNormal;
+        $colectivo = new Colectivo("K", "Empresa genérica", 3);
+        $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
+        $tarjeta = new Tarjeta(100.0, $metodo);
+        $validate = $maquina->escanearTarjeta($tarjeta);
+        $this->assertEquals($validate, true);
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerColectivo(), $colectivo);
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerTarjeta(), $tarjeta);
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerValor(), $valor);
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerTipoTarjeta(), get_class($tarjeta));
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerFecha(), $tiempo->time());
     }
+
 }

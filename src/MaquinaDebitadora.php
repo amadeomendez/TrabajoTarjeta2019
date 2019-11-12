@@ -20,6 +20,7 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
   public function escanearTarjeta(TarjetaInterface $tarjeta) {
     $this->tarjeta = $tarjeta;
     $this->precio = $tarjeta->metodo->valorBoleto($precioBase);
+    return ($this->puedePagar($tarjeta));
   }
 
   public function precioBaseCheck($cant) {
@@ -127,8 +128,8 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
       return true;
     }
     else {
-
       if ( $this->precioCheck(1) ) {
+        $tarjeta->metodo->postViaje();
         $tarjeta->guardarUltimoBoleto(new Boleto($precio, $colectivo, $tarjeta, $tiempo));
         $tarjeta->restarSaldo($precio);
         return true;
@@ -143,7 +144,6 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
           return false;
         }
       }
-
     }
   }
 

@@ -8,34 +8,39 @@ class TarjetaTest extends TestCase {
 
     /**
      * Comprueba que la tarjeta restaure sus viajes plus al recargarla
+     * Amadeo: En la vida real, los plus que debés los decuenta la máquina debitadora,
+     * no el punto de recarga. A ver si te tomás un bondi alguna vez, alumno de
+     * 6to 2018.
      */
     public function testCargaPlus() {
-        $tiempo = new TiempoFalso(0);
-        $tarjeta = new Tarjeta($tiempo);
-        $tarjeta->aumentarPlus();
-        $this->assertEquals($tarjeta->obtenerPlus(), 1);
-        $tarjeta->recargar(100);
-        $this->assertEquals($tarjeta->obtenerPlus(), 0);
-        $tarjeta->aumentarPlus();
-        $this->assertEquals($tarjeta->obtenerPlus(), 1);
-        $tarjeta->aumentarPlus();
-        $this->assertEquals($tarjeta->obtenerPlus(), 2);
-        $tarjeta->recargar(100);
-        $this->assertEquals($tarjeta->obtenerPlus(), 0);
-        $tarjeta = new Tarjeta($tiempo);
-        $tarjeta->aumentarPlus();
-        $tarjeta->aumentarPlus();
-        $tarjeta->recargar(30);
+      $precio = 32.50
+      $tiempo = new TiempoFalso(0);
+      $metodo = new MetodoNormal;
+      $colectivo = new Colectivo("K", "Empresa genérica", 3);
+      $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
+      $tarjeta = new Tarjeta(100.0, $metodo);
+      $tarjeta->sumarPlus();
+      $validate = $maquina->escanearTarjeta($tarjeta);
+      $this->assertEquals($validate, true);
+      $this->assertEquals($tarjeta->obtenerPlus(), 0);
+      $tarjeta->sumarSaldo()
+      $tarjeta->sumarPlus();
+      $tarjeta->sumarPlus();
+      $validate = $maquina->escanearTarjeta($tarjeta);
+      $this->assertEquals($validate, true);
+      $this->assertEquals($tarjeta->obtenerPlus(), 0);
     }
 
     /**
      * Testea que te deje pagar los plus que debés correctamente
      */
     public function testPagarPlus() {
-        $tiempo = new TiempoFalso(0);
-        $colectivo = new Colectivo("K","Empresa genérica",3,$tiempo);
-        $normal = new Tarjeta($tiempo);
-        $normal->recargar(20);
+      $precio = 32.50
+      $tiempo = new TiempoFalso(0);
+      $metodo = new MetodoNormal;
+      $colectivo = new Colectivo("K", "Empresa genérica", 3);
+      $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
+      $tarjeta = new Tarjeta(100.0, $metodo);
         $normal->aumentarPlus();
         $this->assertNotEquals(false,$colectivo->pagarCon($normal));
         $normal = new Tarjeta($tiempo);

@@ -4,58 +4,54 @@ namespace TrabajoTarjeta;
 
 interface MaquinaDebitadoraInterface {
 
-  /**
-   * Paga un viaje en el colectivo con una tarjeta en particular.
-   *
-   * @param TarjetaInterface $tarjeta
-   *
-   * @return BoletoInterface|FALSE
-   *  El boleto generado por el pago del viaje. O FALSE si no hay saldo
-   *  suficiente en la tarjeta.
-   */
-  public function pagarCon(TarjetaInterface $tarjeta);
+  /*
+  * Toma la tarjeta, almacena en la variable, y calcula el precio del boleto según el método.
+  */
+  public function escanearTarjeta(TarjetaInterface $tarjeta);
 
-  /**
-   * Retorna "normal" si puede pagar normalmente,
-   * "plus" si paga con un viaje plus,
-   * "paga un plus" si paga con saldo y ademas abona un plus,
-   * "paga dos plus" si abona dos,
-   * "transbordo normal" si usa transbordo,
-   * "transbordo y paga un plus" si usa transbordo y tambien paga un plus,
-   * "transbordo y paga dos plus" si paga dos,
-   * o "no" en caso contrario.
-   * Luego, si puede pagar, baja el saldo o los viajes plus de la tarjeta dependiendo del caso.
-   *
-   * @param string string int
-   *
-   * @return string
-   */
-  public function puedePagar($linea, $empresa, $numero);
+  /*
+  * Chequea que pueda pagar un viaje al precio base.
+  */
+  public function precioBaseCheck($cant);
 
-  /**
-   * Checkea si se cumplen las opciones necesarias para el vieje plus y devuelve true o false segun el caso.
-   *
-   * @param ColectivoInterface
-   *
-   * @return bool
-   */
-  public function trasbordoPermitido($colectivo);
+  /*
+  * Chequea que pueda pagar un viaje al precio que se decide luego del cálculo en escanearTarjeta.
+  */
+  public function precioCheck($cant);
 
-  /**
-   * Se fija el tiempo necesario para hacer un transbordo segun el dia o si es feriado o no.
-   *
-   * @param TiempoInterface
-   *
-   * @return int
-   */
-  function diferenciaNecesaria($tiempo);
+  /*
+  * Chequea si tiene que pagar algún viaje plus.
+  */
+  public function plusCheck();
 
+  /*
+  * Paga el/los viaje(s) plus que debe, si plusCheck devuelve true.
+  */
+  public function plusPago(TarjetaInterface $tarjeta);
 
-  /**
-   * Se fija si es feriado y retorna true o false segun el caso.
-   *
-   * @return bool
-   */
-  function esFeriado();
+  /*
+  * Se fija que los colectivos sean distintos, chequeando el colectivo actual contra el que figura en el último boleto, éste estando almacenado en la tarjeta.
+  */
+  public function distintosColectivosCheck();
 
+  /*
+  * Saca la diferencia máxima de horas necesarias para concretar un trasbordo.
+  */
+  public function diferenciaNecesaria();
+
+  /*
+  * Se fija si puede hacer un trasbordo.
+  */
+  public function trasbordoCheck();
+
+  /*
+  * Se fija si es feriado?
+  */
+  public function esFeriado();
+
+  /*
+  * Se fija si puede pagar. Devuelve true cuando se realiza un trasbordo con éxito, cuando logra pagar un boleto al precio calculado según el método, o cuando debe usar un viaje
+  * plus. Devuelve false cuando no puede pagar el boleto de ninguna manera.
+  */
+  public function puedePagar(TarjetaInterface $tarjeta);
 }

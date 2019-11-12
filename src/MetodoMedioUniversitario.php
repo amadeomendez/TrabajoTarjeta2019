@@ -4,8 +4,15 @@ namespace TrabajoTarjeta;
 
 class MetodoMedioUniversitario implements MetodoInterface {
 
+  private $mediosUsados = 0;
+
   public function valorBoleto($precioBase){
-    return ($precioBase / 2.0);
+    if ($this->mediosUsados <= 2) {
+      return ($precioBase / 2.0);
+    }
+    else {
+      return $precioBase;
+    }
   }
 
   public function postViaje(){
