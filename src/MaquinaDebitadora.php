@@ -140,7 +140,7 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
     else {
       if ( $this->precioCheck(1) ) {
         $tarjeta->metodo->postViaje();
-        $tarjeta->guardarUltimoBoleto(new Boleto($this->precio, $this->colectivo, $tarjeta, $this->tiempo));
+        $tarjeta->guardarUltimoBoleto(new Boleto($this->precioBase, $this->colectivo, $tarjeta, $this->tiempo));
         $tarjeta->restarSaldo($this->precio);
         return true;
       }
