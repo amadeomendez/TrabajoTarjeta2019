@@ -23,7 +23,7 @@ class TarjetaTest extends TestCase {
       $validate = $maquina->escanearTarjeta($tarjeta);
       $this->assertEquals($validate, true);
       $this->assertEquals($tarjeta->obtenerPlus(), 0);
-      $tarjeta->sumarSaldo()
+      $tarjeta->sumarSaldo();
       $tarjeta->sumarPlus();
       $tarjeta->sumarPlus();
       $validate = $maquina->escanearTarjeta($tarjeta);
