@@ -11,6 +11,7 @@ class BoletoTest extends TestCase {
         $tiempo = new TiempoFalso(0);
         $metodo = new MetodoNormal;
         $colectivo = new Colectivo("K", "Empresa genérica", 3);
+        $this->assertEquals($colectivo, null);
         $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
         $tarjeta = new Tarjeta(100.0, $metodo);
         $validate = $maquina->escanearTarjeta($tarjeta);
