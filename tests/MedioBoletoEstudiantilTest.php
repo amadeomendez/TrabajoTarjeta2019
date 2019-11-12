@@ -32,7 +32,7 @@ class MedioBoletoEstudiantilTest extends TestCase {
      * Testea que el viaje salga la mitad de lo que sale con una tarjeta normal
      */
     public function testSaleLaMitad(){
-      $precio = 32.50
+      $precio = 32.50;
       $tiempo = new TiempoFalso(0);
       $normal = new MetodoNormal;
       $estudiantil = new MetodoMedioBoleto;

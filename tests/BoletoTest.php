@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 class BoletoTest extends TestCase {
 
     public function testBoleto() {
-        $precio = 32.50
+        $precio = 32.50;
         $tiempo = new TiempoFalso(0);
         $metodo = new MetodoNormal;
         $colectivo = new Colectivo("K", "Empresa genérica", 3);

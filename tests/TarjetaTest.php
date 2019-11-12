@@ -13,7 +13,7 @@ class TarjetaTest extends TestCase {
      * 6to 2018.
      */
     public function testCargaPlus() {
-      $precio = 32.50
+      $precio = 32.50;
       $tiempo = new TiempoFalso(0);
       $metodo = new MetodoNormal;
       $colectivo = new Colectivo("K", "Empresa genérica", 3);
@@ -35,7 +35,7 @@ class TarjetaTest extends TestCase {
      * Testea que te deje pagar los plus que debés correctamente
      */
     public function testPagarPlus() {
-      $precio = 32.50
+      $precio = 32.50;
       $tiempo = new TiempoFalso(0);
       $metodo = new MetodoNormal;
       $colectivo = new Colectivo("K", "Empresa genérica", 3);

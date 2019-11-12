@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 class ColectivoTest extends TestCase {
 
   public function testPagarConSaldo() {
-    $precio = 32.50
+    $precio = 32.50;
     $tiempo = new TiempoFalso(0);
     $metodo = new MetodoNormal;
     $colectivo = new Colectivo("K", "Empresa genérica", 3);
@@ -26,8 +26,8 @@ class ColectivoTest extends TestCase {
   }
 
   public function testPagarSinSaldo() {
-    $precio = 32.50
-    $miSaldo = 12.50
+    $precio = 32.50;
+    $miSaldo = 12.50;
     $tiempo = new TiempoFalso(0);
     $metodo = new MetodoNormal;
     $colectivo = new Colectivo("K", "Empresa genérica", 3);
