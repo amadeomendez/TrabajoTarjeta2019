@@ -105,20 +105,25 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
   }
 
   public function trasbordoCheck() {
-    if ($this->distintosColectivosCheck()) {
-      $actual = $this->tiempo;
-      $anterior = $this->tarjeta->obtenerUltimoBoleto()->obtenerFecha();
-      $diferencia = (($actual) - ($anterior));
-      // La diferencia que devuelve está en minutos, por eso multiplico por 60
-      if ($diferencia < ($this->diferenciaNecesaria($actual) * 60) ) {
-        return true;
+    if($this->tarjeta->obtenerUltimoBoleto() == null){
+      return true;
+    }
+    else {
+      if ($this->distintosColectivosCheck()) {
+        $actual = $this->tiempo;
+        $anterior = $this->tarjeta->obtenerUltimoBoleto()->obtenerFecha();
+        $diferencia = (($actual) - ($anterior));
+        // La diferencia que devuelve está en minutos, por eso multiplico por 60
+        if ($diferencia < ($this->diferenciaNecesaria($actual) * 60) ) {
+          return true;
+        }
+        else {
+          return false;
+        }
       }
       else {
         return false;
       }
-    }
-    else {
-      return false;
     }
   }
 
