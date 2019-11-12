@@ -20,7 +20,8 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
   public function escanearTarjeta(TarjetaInterface $tarjeta) {
     $this->tarjeta = $tarjeta;
     $this->precio = $tarjeta->metodo->valorBoleto($precioBase);
-    return ($this->puedePagar($tarjeta));
+    $validate = $this->puedePagar($tarjeta);
+    return $validate;
   }
 
   public function precioBaseCheck($cant) {
