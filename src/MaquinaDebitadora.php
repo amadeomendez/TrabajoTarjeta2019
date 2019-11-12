@@ -134,19 +134,19 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
   public function puedePagar(TarjetaInterface $tarjeta) {
     $this->plusPago($tarjeta);
     if ( $this->trasbordoCheck() ) {
-      $tarjeta->guardarUltimoBoleto(new Boleto(0.0, $colectivo, $tarjeta, $tiempo));
+      $tarjeta->guardarUltimoBoleto(new Boleto(0.0, $this->colectivo, $tarjeta, $this->tiempo));
       return true;
     }
     else {
       if ( $this->precioCheck(1) ) {
         $tarjeta->metodo->postViaje();
-        $tarjeta->guardarUltimoBoleto(new Boleto($precio, $colectivo, $tarjeta, $tiempo));
-        $tarjeta->restarSaldo($precio);
+        $tarjeta->guardarUltimoBoleto(new Boleto($this->precio, $this->colectivo, $tarjeta, $this->tiempo));
+        $tarjeta->restarSaldo($this->precio);
         return true;
       }
       else {
         if($tarjeta->obtenerPlus() < 2){
-          $tarjeta->guardarUltimoBoleto(new Boleto(0.0, $colectivo, $tarjeta, $tiempo));
+          $tarjeta->guardarUltimoBoleto(new Boleto(0.0, $this->colectivo, $tarjeta, $this->tiempo));
           $tarjeta->sumarPlus();
           return true;
         }
