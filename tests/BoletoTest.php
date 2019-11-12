@@ -17,7 +17,7 @@ class BoletoTest extends TestCase {
         $this->assertEquals($validate, true);
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerColectivo(), $colectivo);
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerTarjeta(), $tarjeta);
-        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerValor(), $valor);
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerValor(), $precio);
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerTipoTarjeta(), get_class($tarjeta));
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerFecha(), $tiempo);
     }
