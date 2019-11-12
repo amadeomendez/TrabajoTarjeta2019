@@ -9,7 +9,7 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
   protected $tiempo;
   protected $precioBase;
 
-  protected $precio
+  protected $precio;
 
   public function __construct(ColectivoInterface $colectivo, $tiempo, $precio) {
     $this->colectivo = $colectivo;
