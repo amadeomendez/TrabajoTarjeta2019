@@ -8,7 +8,7 @@ class Tarjeta implements TarjetaInterface {
   protected $plus = 0;
   protected $ultimoBoleto;
 
-  protected $metodo;
+  public $metodo;
 
   public function __construct($saldo = 0, MetodoInterface $metodo = null) {
     $this->saldo = $saldo;
