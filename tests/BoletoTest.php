@@ -19,7 +19,7 @@ class BoletoTest extends TestCase {
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerTarjeta(), $tarjeta);
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerValor(), $valor);
         $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerTipoTarjeta(), get_class($tarjeta));
-        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerFecha(), $tiempo->time());
+        $this->assertEquals($tarjeta->obtenerUltimoBoleto()->obtenerFecha(), $tiempo);
     }
 
 }
