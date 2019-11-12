@@ -34,6 +34,8 @@ class ColectivoTest extends TestCase {
     $colectivo = new Colectivo("K", "Empresa genérica", 3);
     $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
     $tarjeta = new Tarjeta($miSaldo, $metodo);
+    $tarjeta->sumarPlus();
+    $tarjeta->sumarPlus();
     $validate = $maquina->escanearTarjeta($tarjeta);
     $this->assertEquals($validate, false);
     /*

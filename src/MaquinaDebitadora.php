@@ -145,13 +145,13 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
         return true;
       }
       else {
-        if($tarjeta->obtenerPlus() < 2){
+        if($tarjeta->obtenerPlus() >= 2){
+          return false;
+        }
+        else {
           $tarjeta->guardarUltimoBoleto(new Boleto(0.0, $this->colectivo, $tarjeta, $this->tiempo));
           $tarjeta->sumarPlus();
           return true;
-        }
-        else {
-          return false;
         }
       }
     }
