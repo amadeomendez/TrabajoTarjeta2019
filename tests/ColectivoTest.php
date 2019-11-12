@@ -28,12 +28,11 @@ class ColectivoTest extends TestCase {
 
   public function testPagarSinSaldo() {
     $precio = 32.50;
-    $miSaldo = 12.50;
     $tiempo = new TiempoFalso(0);
     $metodo = new MetodoNormal;
     $colectivo = new Colectivo("K", "Empresa genérica", 3);
     $maquina = new MaquinaDebitadora($colectivo, $tiempo, $precio);
-    $tarjeta = new Tarjeta($miSaldo, $metodo);
+    $tarjeta = new Tarjeta(0.0, $metodo);
     $tarjeta->sumarPlus();
     $tarjeta->sumarPlus();
     $validate = $maquina->escanearTarjeta($tarjeta);
