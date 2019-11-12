@@ -61,17 +61,22 @@ class MaquinaDebitadora implements MaquinaDebitadoraInterface {
   }
 
   public function distintosColectivosCheck() {
-    $ultimoColectivo = $this->tarjeta->obtenerUltimoBoleto()->obtenerColectivo();
-    if($ultimoColectivo !== null) {
-      if ($this->colectivo == $ultimoColectivo) {
-        return false;
-      }
-      else {
-        return true;
-      }
+    if($this->tarjeta->obtenerUltimoBoleto() == null){
+      return true;
     }
     else {
-      return false;
+      $ultimoColectivo = $this->tarjeta->obtenerUltimoBoleto()->obtenerColectivo();
+      if($ultimoColectivo !== null) {
+        if ($this->colectivo == $ultimoColectivo) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+      else {
+        return false;
+      }
     }
   }
 
